@@ -1,6 +1,7 @@
 import telepot
 
 bot = telepot.Bot('API TOKEN')
-bot.getMe()
+print(bot.getMe())
+
 response = bot.getUpdates()
 print(response)
