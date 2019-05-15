@@ -46,16 +46,21 @@ def handleMsg(msg):
         output = output + '/die - stops bot\n'
         output = output + '/reboot - reboot RPi\n'
       elif command == '/photo':
-        camera = picamera.PiCamera()
+        camera = None
         try:
-          time.sleep(5)
-          camera.resolution = '1080p'
-          camera.hflip = True
-          camera.vflip = True
-          camera.capture(picturePath)
-          bot.sendPhoto(chatId, open(picturePath, 'rb'))
-        finally:
-          camera.close()
+          camera = picamera.PiCamera()
+        except:
+          output = 'Camera not connected!'
+        if camera is not None:
+          try:
+            time.sleep(5)
+            camera.resolution = '1080p'
+            camera.hflip = True
+            camera.vflip = True
+            camera.capture(picturePath)
+            bot.sendPhoto(chatId, open(picturePath, 'rb'))
+          finally:
+            camera.close()
       elif command == '/uptime':
         output = subprocess.check_output('uptime')
       elif command == '/df':
